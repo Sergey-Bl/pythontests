@@ -1,10 +1,8 @@
 from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 import base_page
-from locator.locators_help import get_locator_from_xpath, get_locator_from_xpath_wb_wait, get_locator_from_css_wb_wait
-from conftest import driver_chrome
+from locator.locators_help import get_locator_from_xpath_wb_wait, get_locator_from_css_wb_wait
 
 
 class Locators21v:
@@ -21,9 +19,7 @@ class Locators21v:
 
 def cookie_accept(driver_chrome):
     try:
-        accept_all_button = WebDriverWait(driver_chrome, 5).until(
-            EC.element_to_be_clickable(get_locator_from_xpath(driver_chrome, Locators21v.ACCEPT_COOKIE_BUTTON))
-        )
+        accept_all_button = get_locator_from_xpath_wb_wait(driver_chrome, Locators21v.ACCEPT_COOKIE_BUTTON, 5)
         accept_all_button.click()
 
     except NoSuchElementException:
