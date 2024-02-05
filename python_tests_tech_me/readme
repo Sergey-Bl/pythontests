@@ -1,0 +1,5 @@
+Starts mark modules:
+
+pytest -m smoke 
+pytest -m search
+pytest -m basket
