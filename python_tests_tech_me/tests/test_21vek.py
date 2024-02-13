@@ -10,9 +10,10 @@ def test_smoke_open_site_21vek(driver_chrome, driver_firefox):
 
 
 @pytest.mark.search("test-002")
-def test_search_func(driver_chrome):
-    search_result_text = pages.pages21vek.find_checker_field_result(driver_chrome)
-    pattern = re.compile(r'Запрос «adidas». Найдено? \d+ товар(?:ов)?')
+@pytest.mark.parametrize("search_query", ["adidas", "nike", "iphone"])
+def test_search_func(driver, search_query):
+    search_result_text = pages.pages21vek.find_checker_field_result(driver, search_query)
+    pattern = re.compile(rf'Запрос «{search_query}». Найдено? \d+ товар(?:ов)?')
     assert pattern.match(search_result_text) is not None
 
 
