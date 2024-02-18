@@ -1,6 +1,7 @@
+import data
 import pages.search_page
 from pages.__init__ import NoSuchElementException, TimeoutException, WebDriverWait, BasePage, \
-    get_locator_from_css_wb_wait, get_locator_from_xpath_wb_wait, logging
+    HelperTests, logging
 
 
 class MainPageLocators:
@@ -14,12 +15,13 @@ class MainPageLocators:
 
 class MainPage(BasePage):
     def __init__(self, driver):
-        super().__init__(driver)
+        super().__init__(driver, data.DOMEN)
 
     def cookie_accept(self):
         try:
-            accept_all_button = get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.ACCEPT_COOKIE_BUTTON, 5)
-            accept_all_button.click()
+            HelperTests.wait_click_xpath(self.driver,
+                                         MainPageLocators.ACCEPT_COOKIE_BUTTON,
+                                         5)
         except NoSuchElementException:
             logging.error('no cookie pop-up')
         except TimeoutException:
@@ -39,27 +41,30 @@ class MainPage(BasePage):
             logging.info("timeout")
 
     def find_checker_field_result(self):
-        search_field = get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.SEARCH_FIELD, 5)
+        search_field = HelperTests.get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.SEARCH_FIELD, 5)
         search_field.send_keys("Adidas")
-        get_locator_from_css_wb_wait(self.driver, MainPageLocators.SEARCH_BUTTON, 15).click()
-        result_find = get_locator_from_css_wb_wait(self.driver, pages.search_page.SearchLocators.SEARCH_RESULT, 15)
+        HelperTests.wait_click_css(self.driver, MainPageLocators.SEARCH_BUTTON, 15)
+        result_find = HelperTests.get_locator_from_css_wb_wait(self.driver,
+                                                               pages.search_page.SearchLocators.SEARCH_RESULT, 15)
         search_result_text = result_find.text.strip()
 
         return search_result_text
 
     def click_check_catalog_button(self):
-        get_locator_from_css_wb_wait(self.driver, MainPageLocators.CATALOG_BUTTON, 10).click()
-        button_locator = get_locator_from_css_wb_wait(self.driver, MainPageLocators.CATALOG_BUTTON, 10)
-        text_summary_catalog = get_locator_from_css_wb_wait(self.driver, MainPageLocators.CATEGORY_TECHNIQUE_HEADER,
-                                                            10)
+        HelperTests.wait_click_css(self.driver, MainPageLocators.CATALOG_BUTTON, 10)
+        button_locator = HelperTests.get_locator_from_css_wb_wait(self.driver, MainPageLocators.CATALOG_BUTTON, 10)
+        text_summary_catalog = HelperTests.get_locator_from_css_wb_wait(self.driver,
+                                                                        MainPageLocators.CATEGORY_TECHNIQUE_HEADER,
+                                                                        10)
         summary_result = text_summary_catalog.text
         return summary_result, button_locator
 
     def check_added_product_counter_basket(self):
-        counter_check = get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.BASKET_COUNTER_ADDED_1_PRODUCT)
+        counter_check = HelperTests.get_locator_from_xpath_wb_wait(self.driver,
+                                                                   MainPageLocators.BASKET_COUNTER_ADDED_1_PRODUCT)
         return counter_check
 
     def clear_search_field(self):
 
-        search_field = get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.SEARCH_FIELD, 10)
+        search_field = HelperTests.get_locator_from_xpath_wb_wait(self.driver, MainPageLocators.SEARCH_FIELD, 10)
         search_field.clear()

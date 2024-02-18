@@ -1,4 +1,6 @@
 import re
+
+import allure
 import pytest
 import pages.basket_page
 import pages.main_page
@@ -7,6 +9,7 @@ import pages.search_page
 import logging
 
 
+@allure.title('test1')
 @pytest.mark.smoke("test-001")
 def test_smoke_open_site_21vek(driver_chrome):
     pages.main_page.MainPage(driver_chrome).checker_full_load_page()

@@ -5,12 +5,13 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
-import pages
+import data
+import pages.main_page, pages.herokuapp_page
 
 
 # scope='session' пока не работает / нужно решать проблему с вебдрайвервейтом 
 # и дублирование данных
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=False)
 def driver_chrome():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     driver.maximize_window()
@@ -31,3 +32,11 @@ def driver_firefox():
     yield driver
     driver.close()
     driver.quit()
+
+
+@pytest.fixture()
+def driver_chrome_heroku_test():
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver.maximize_window()
+    yield driver
+    driver.close()

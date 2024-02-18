@@ -1,4 +1,5 @@
-from pages.__init__ import BasePage, get_locator_from_css_wb_wait
+import data
+from pages.__init__ import BasePage, HelperTests
 
 
 class BasketPageLocators:
@@ -9,14 +10,15 @@ class BasketPageLocators:
 
 class BasketPage(BasePage):
     def __init__(self, driver):
-        super().__init__(driver)
+        super().__init__(driver, data.DOMEN)
 
     def click_basket(self):
-        get_locator_from_css_wb_wait(self.driver, BasketPageLocators.BASKET_BUTTON, 5).click()
+        HelperTests.wait_click_css(self.driver, BasketPageLocators.BASKET_BUTTON, 5)
 
     def check_empty_basket_result(self):
-        path_text_empty_basket = get_locator_from_css_wb_wait(self.driver, BasketPageLocators.EMPTY_BASKET_HEADER, 5)
+        path_text_empty_basket = HelperTests.get_locator_from_css_wb_wait(self.driver,
+                                                                          BasketPageLocators.EMPTY_BASKET_HEADER, 5)
         return path_text_empty_basket
 
     def click_here_link_empty_basket(self):
-        get_locator_from_css_wb_wait(self.driver, BasketPageLocators.HERE_BUTTON_EMPTY_BASKET).click()
+        HelperTests.wait_click_css(self.driver, BasketPageLocators.HERE_BUTTON_EMPTY_BASKET)

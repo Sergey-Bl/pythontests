@@ -1,5 +1,6 @@
+import data
 from pages import main_page
-from pages.__init__ import BasePage, get_locator_from_css_wb_wait
+from pages.__init__ import BasePage, HelperTests
 
 
 class SearchLocators:
@@ -10,13 +11,13 @@ class SearchLocators:
 
 class SearchPage(BasePage):
     def __init__(self, driver):
-        super().__init__(driver)
+        super().__init__(driver, data.DOMEN)
 
     def click_product_from_find(self):
-        get_locator_from_css_wb_wait(self.driver, SearchLocators.PRODUCT_FROM_FIND_RANDOM, 10).click()
+        HelperTests.wait_click_css(self.driver, SearchLocators.PRODUCT_FROM_FIND_RANDOM, 10)
 
     def cansel_selected_item_search(self):
-        get_locator_from_css_wb_wait(self.driver, SearchLocators.SEARCH_X_BUTTON, 10).click()
+        HelperTests.wait_click_css(self.driver, SearchLocators.SEARCH_X_BUTTON, 10)
 
     def find_and_select_product(self):
         main_page.MainPage(self.driver).find_checker_field_result()
